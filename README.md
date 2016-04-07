@@ -10,6 +10,12 @@ On story detail pages, Copy and Move buttons are injected into the page. Copying
 
 *This is in no way affiliated with, maintained, sponsored or endorsed by AgileZen or Rally Software.*
 
-## License
+## Licensing
 
 [MIT License](LICENSE.md?raw=true)
+
+### Attributions
+
+* "[Font Awesome](http://fontawesome.io)", Dave Gandy, MIT License and SIL OFL 1.1
+* "[jQuery](https://jquery.org/)", MIT License
+* "[jQuery Dropdown](http://labs.abeautifulsite.net/jquery-dropdown/)", MIT License
