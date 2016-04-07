@@ -1,0 +1,22 @@
+.project-panel div {
+	margin-bottom: 4px;
+	font-size: 1.4em;
+}
+
+.project-panel  select {
+	width: 98%;
+	padding: 3px;
+	margin-bottom: 4px;
+}
+
+.loadingSpinner {
+	display: none;
+}
+.loadingHide > label,
+.loadingHide > select,
+.loadingHide div button {
+	display: none;
+}
+.loadingHide > div {
+	display: block;
+}

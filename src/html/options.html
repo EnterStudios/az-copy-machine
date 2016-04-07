@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>AgileZen Copy Machine Options</title>
+    <style>
+	  body: { padding: 10px; }
+	  #status { display: inline; margin-left: 15px; }
+    </style>
+  </head>
+  <body>
+    <h3>API Token Instructions</h3>
+
+    <ol>
+      <li>In AgileZen, go to the <a href="https://agilezen.com/settings" target="_blank">Settings</a> page.</li>
+      <li>Switch to the Developer tab.</li>
+      <li>Click the "New API Key" button.</li>
+      <li>Add a Description (e.g., AZ Copy Machine) and make sure to click "Save Changes".</li>
+	  <li>Copy the API Token below and save.</li>
+	  <li><strong>You must have Read+Write API access to all Projects you wish to copy to and from.</strong></li>
+    </ol>
+
+	<label>
+		API Token: 
+		<input type="text" id="apiToken" maxlength="32" size="40" />
+	</label>
+
+	<hr />
+    
+    <button id="save">Save</button><div id="status"></div>
+
+    <script src="../js/options.js"></script>
+  </body>
+</html>
