@@ -6,7 +6,9 @@ A Chrome extension to allow stories to be copied and moved across AgileZen proje
 
 On story detail pages, Copy and Move buttons are injected into the page. Copying a ticket will clone it, while moving it will clone it and delete the original. Stories can be copied/moved to the same or another project, as well as optionally copying the tags and tasks. 
 
-![Toolbar screenshot](docs/images/screen_toolbar.png)
+![Toolbar buttons](docs/images/screen_toolbar.png)
+
+![Copy popup](docs/images/screen_copy.png)
 
 *This is in no way affiliated with, maintained, sponsored or endorsed by AgileZen or Rally Software.*
 
