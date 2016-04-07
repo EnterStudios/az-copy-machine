@@ -14,7 +14,7 @@
 			// Open clone in new tab
 			chrome.runtime.sendMessage({
 				newTabUrl: 'https://agilezen.com/project/' + options.destinationProjectId + '/story/' + newStoryId
-			}, function (response) { });
+			});
 		});
 	});
 
