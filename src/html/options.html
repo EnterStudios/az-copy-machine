@@ -5,18 +5,19 @@
     <style>
 	  body: { padding: 10px; }
 	  #status { display: inline; margin-left: 15px; }
+	  #save { margin-top: 5px; }
     </style>
+	<script type="text/javascript" src="../js/jquery-2.2.3.min.js"></script>
   </head>
   <body>
     <h3>API Token Instructions</h3>
 
     <ol>
-      <li>In AgileZen, go to the <a href="https://agilezen.com/settings" target="_blank">Settings</a> page.</li>
-      <li>Switch to the Developer tab.</li>
+      <li>In AgileZen, go to the <a href="https://agilezen.com/settings" target="_blank">Settings</a> page and Developer tab.</li>
       <li>Click the "New API Key" button.</li>
-      <li>Add a Description (e.g., AZ Copy Machine) and make sure to click "Save Changes".</li>
-	  <li>Copy the API Token below and save.</li>
-	  <li><strong>You must have Read+Write API access to all Projects you wish to copy to and from.</strong></li>
+      <li>Add a Description (e.g., AZ Copy Machine) and click "Save Changes".</li>
+	  <li>Copy the API Token below and click "Load API Access".</li>
+	  <li><strong>You must have API access to all Projects you wish to copy to and from.</strong></li>
     </ol>
 
 	<label>
@@ -24,9 +25,17 @@
 		<input type="text" id="apiToken" maxlength="32" size="40" />
 	</label>
 
+    <button id="save">Load API Access</button><div id="status"></div>
+	
 	<hr />
-    
-    <button id="save">Save</button><div id="status"></div>
+
+	<span>Projects with Read+Write Access (copy/move to and from):</span>
+	<ul id="rwList">
+	</ul>
+	
+	<span>Projects with Read Access (copy from only):</span>
+	<ul id="rList">
+	</ul>
 
     <script src="../js/options.js"></script>
   </body>

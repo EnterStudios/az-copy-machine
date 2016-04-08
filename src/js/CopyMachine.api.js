@@ -2,10 +2,6 @@
 	CopyMachine.api = CopyMachine.api || {};
 
 	var API_BASE_URL = 'https://agilezen.com/api/v1/';
-	
-	// Internal cache of Projects loaded to prevent unnecessary
-	// repeated calls to the AgileZen API.
-	var projects = [];
 
 	/**
 	 * Verifies whether the user has set their AgileZen API Key on the options
@@ -27,27 +23,46 @@
 	 * @param callback Pass Project list to this callback function
 	 */
 	CopyMachine.api.getProjects = function (callback) {
-		if (projects.length) {
-			// Already loaded the projects, so immediately return.
-			callback(projects);
-			return;
+		callback(CopyMachine.options['readProjects'],
+			CopyMachine.options['readWriteProjects']
+		);
+	};
+	
+	/**
+	 * Get whether the user has Read API access for the given Project.
+	 *
+	 * @param projectId The Project ID
+	 */
+	CopyMachine.api.hasReadAccessToProject = function (projectId) {
+		var rProjects = CopyMachine.options['readProjects'];
+		for (rp in rProjects) {
+			if (rProjects[rp].id == projectId) {
+				return true;
+			}
 		}
 		
-		if (!CopyMachine.api.verifyApiToken()) {
-			return;
-		}
-
-		$.ajax({
-			url: API_BASE_URL + 'projects',
-			headers: { 
-				'X-Zen-ApiKey': CopyMachine.options['apiToken']
+		var rwProjects = CopyMachine.options['readWriteProjects'];
+		for (rwp in rwProjects) {
+			if (rwProjects[rwp].id == projectId) {
+				return true;
 			}
-		}).done(function (data) {
-			projects = data.items;
-			callback(projects);
-		}).fail(function (jqXHR, textStatus) {
-			alert('Failed to load available Projects: ' + textStatus);
-		});
+		}
+		return false;
+	};
+	
+	/**
+	 * Get whether the user has Read+Write API access for the given Project.
+	 *
+	 * @param projectId The Project ID
+	 */
+	CopyMachine.api.hasReadWriteAccessToProject = function (projectId) {
+		var rwProjects = CopyMachine.options['readWriteProjects'];
+		for (rwp in rwProjects) {
+			if (rwProjects[rwp].id == projectId) {
+				return true;
+			}
+		}
+		return false;
 	};
 
 	/**
