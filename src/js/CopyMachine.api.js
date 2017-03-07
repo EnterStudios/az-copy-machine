@@ -89,6 +89,35 @@
 			alert('Failed to load Story details: ' + textStatus);
 		});
 	};
+	
+	/**
+	 * Add a comment to a new story to specify where it was copied from.
+	 *
+	 * @param options Source and Destination story info; copy options.
+	 * @param callback Function to execute after the story has completed.
+	 */
+	CopyMachine.api.addCopyComment = function (options, callback) {
+		var newComment = {
+			text: 'Copied from https://agilezen.com/project/' + options.sourceProjectId + '/story/' + options.sourceStoryId
+		};
+		
+		$.ajax({
+			method: 'POST',
+			url: API_BASE_URL + 'projects/' + options.destinationProjectId + '/stories/' + options.destinationStoryId + '/comments',
+			data: JSON.stringify(newComment),
+			dataType: 'json',
+			contentType: 'application/json; charset=utf-8',
+			headers: { 
+				'X-Zen-ApiKey': CopyMachine.options['apiToken']
+			}
+		}).done(function (data) {
+			if (callback) {
+				callback(options.destinationStoryId);
+			}
+		}).fail(function (jqXHR, textStatus) {
+			alert('Failed to add copy comment: ' + textStatus);
+		});
+	};
 
 	/**
 	 * Copy a Story to a new Project.
@@ -111,9 +140,9 @@
 					'X-Zen-ApiKey': CopyMachine.options['apiToken']
 				}
 			}).done(function (data) {
-				if (callback) {
-					callback(data.id);
-				}
+				options.destinationStoryId = data.id;
+				
+				CopyMachine.api.addCopyComment(options, callback)
 			}).fail(function (jqXHR, textStatus) {
 				alert('Failed to copy Story: ' + textStatus);
 			});
@@ -149,7 +178,7 @@
 	// Create a new Story object based on the given options.
 	function copyStoryDetails(options, story) {
 		var newStory = {
-			text: story.text,
+			text: options.newTitle,
 			details: story.details
 		};
 		if (story.size) {

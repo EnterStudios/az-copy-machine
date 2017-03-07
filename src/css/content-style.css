@@ -1,12 +1,37 @@
+.copy-title {
+	border-bottom: 1px solid #d6dadc;
+	box-sizing: border-box;
+	color: #8c8c8c;
+	display: block;
+	font: 14px 'Helvetica Neue',Arial,Helvetica,sans-serif;
+	line-height: 36px;
+	margin-top: -10px;
+	padding: 0 2px;
+	text-align: center;
+}
+
+.copy-label {
+	color: #4d4d4d;
+	font: 14px 'Helvetica Neue',Arial,Helvetica,sans-serif;
+	font-weight: 700;
+	line-height: 18px;
+}
+
+.copy-text {
+	height: 54px;
+	margin-bottom: 12px;
+	resize: vertical;
+	width: 180px;
+}
+
 .project-panel div {
 	margin-bottom: 4px;
-	font-size: 1.4em;
 }
 
 .project-panel  select {
 	width: 98%;
 	padding: 3px;
-	margin-bottom: 4px;
+	margin-bottom: 12px;
 }
 
 .loadingSpinner {
@@ -14,6 +39,7 @@
 }
 .loadingHide > label,
 .loadingHide > select,
+.loadingHide > textarea,
 .loadingHide div button {
 	display: none;
 }

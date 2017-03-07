@@ -22,6 +22,7 @@
 			buttonId: 'story-toolbar-' + name,
 			buttonTitle: name + ' story to another project',
 			buttonText: name,
+			buttonLongText: name + ' Story',
 			icon: iconClass
 		};
 		CopyMachine.ui.buttons[name] = buttonOptions;
@@ -62,13 +63,23 @@
 		
 		// Add options for each Project to the dropdown
 		for (var i = 0; i < projects.length; i++) {
-			var projectName = document.createTextNode(projects[i].name);
 			var projectOption = document.createElement('option');
 			projectOption.value = projects[i].id;
-			projectOption.appendChild(projectName);
+			projectOption.innerHTML = projects[i].name;
 				
 			dropdown.appendChild(projectOption);
 		}
+	};
+	
+	/**
+	 * Populate a dropdown with the Story details.
+	 * 
+	 * @param dropdownOptions Options of the dropdown element
+	 * @param story The Story details
+	 */
+	CopyMachine.ui.populateStory = function (dropdownOptions, story) {
+		var titleArea = document.getElementById(dropdownOptions.titleId);
+		titleArea.value = story.text;
 	};
 	
 	/**
@@ -107,28 +118,53 @@
 	function addDropdownPanel(name, click) {
 		var buttonOptions = CopyMachine.ui.buttons[name];
 		buttonOptions.dropdownId = name + '-dropdown';
-		buttonOptions.dropdownTitle = name + ' to Project';
+		buttonOptions.dropdownTitle = name + ' to...';
 		buttonOptions.actionButtonId = name + '-button';
 		buttonOptions.projectListId = name + '-project-list';
 		buttonOptions.inclTagsId = name + '-inclTags';
 		buttonOptions.inclTasksId = name + '-inclTasks';
+		buttonOptions.titleId = name + '-title';
+		
+		// Title of the Popup
+		var popupTitleText = document.createTextNode(buttonOptions.buttonLongText);
+		var popupTitleSpan = document.createElement('span');
+		popupTitleSpan.appendChild(popupTitleText);
+		popupTitleSpan.className = 'copy-title';
+		var popupTitle = document.createElement('div');
+		popupTitle.appendChild(popupTitleSpan);
+		
+		// Title of the ticket
+		var ticketTitleText = document.createTextNode('Title');
+		var ticketTitle = document.createElement('label');
+		ticketTitle.appendChild(ticketTitleText);
+		ticketTitle.className = 'copy-label';
+		
+		var ticketTitleArea = document.createElement('textarea');
+		ticketTitleArea.className = 'copy-text';
+		ticketTitleArea.id = buttonOptions.titleId;
 		
 		// Title of the dropdown panel
 		var projectTitleText = document.createTextNode(buttonOptions.dropdownTitle);
-		var projectTitle = document.createElement('div');
+		var projectTitle = document.createElement('label');
 		projectTitle.appendChild(projectTitleText);
+		projectTitle.className = 'copy-label';
 		
 		// Dropdown containing Project list
 		var projectSelect = document.createElement('select');
 		projectSelect.id = buttonOptions.projectListId;
 		
 		// Additional options to copy
+		var inclTitleText = document.createTextNode('Keep...');
+		var inclTitle = document.createElement('label');
+		inclTitle.appendChild(inclTitleText);
+		inclTitle.className = 'copy-label';
+		
 		/// Include tags
 		var inclTags = document.createElement('input');
 		inclTags.type = 'checkbox';
 		inclTags.id = buttonOptions.inclTagsId;
 		
-		var inclTagsText = document.createTextNode('Include tags');
+		var inclTagsText = document.createTextNode('Tags');
 		var inclTagsLabel = document.createElement('label');
 		inclTagsLabel.appendChild(inclTags);
 		inclTagsLabel.appendChild(inclTagsText);
@@ -138,7 +174,7 @@
 		inclTasks.type = 'checkbox';
 		inclTasks.id = buttonOptions.inclTasksId;
 		
-		var inclTasksText = document.createTextNode('Include tasks');
+		var inclTasksText = document.createTextNode('Tasks');
 		var inclTasksLabel = document.createElement('label');
 		inclTasksLabel.appendChild(inclTasks);
 		inclTasksLabel.appendChild(inclTasksText);
@@ -152,7 +188,7 @@
 			actionClicked(buttonOptions.buttonText, click);
 		});
 		
-		var buttonText = document.createTextNode(buttonOptions.buttonText);
+		var buttonText = document.createTextNode(buttonOptions.buttonLongText);
 		actionButton.appendChild(buttonText);
 		
 		var buttonPanel = document.createElement('div');
@@ -169,10 +205,15 @@
 		// Set up the main dropdown panel
 		var projectPanel = document.createElement('div');
 		projectPanel.className = 'jq-dropdown-panel project-panel';
-		projectPanel.appendChild(projectTitle);
-		projectPanel.appendChild(projectSelect);
+		projectPanel.appendChild(popupTitle);
+		projectPanel.appendChild(ticketTitle);
+		projectPanel.appendChild(ticketTitleArea);
+		projectPanel.appendChild(inclTitle);
 		projectPanel.appendChild(inclTagsLabel);
 		projectPanel.appendChild(inclTasksLabel);
+		projectPanel.appendChild(document.createElement('br'));
+		projectPanel.appendChild(projectTitle);
+		projectPanel.appendChild(projectSelect);
 		projectPanel.appendChild(buttonPanel);
 		projectPanel.appendChild(loadingPanel);
 		
@@ -202,8 +243,10 @@
 			sourceStoryId: CopyMachine.storyId,
 			destinationProjectId: projectList.options[projectList.selectedIndex].value,
 			includeTags: document.getElementById(buttonOptions.inclTagsId).checked,
-			includeTasks: document.getElementById(buttonOptions.inclTasksId).checked
+			includeTasks: document.getElementById(buttonOptions.inclTasksId).checked,
+			newTitle: document.getElementById(buttonOptions.titleId).value
 		};
+
 		click(options);
 	}
 	

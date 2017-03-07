@@ -41,6 +41,9 @@
 					var projectListId = CopyMachine.ui.buttons[b].projectListId;
 					CopyMachine.ui.populateProjects(projectListId, readWriteProjects);
 				});
+				CopyMachine.api.getStory(CopyMachine.projectId, CopyMachine.storyId, function (story) {
+					CopyMachine.ui.populateStory(CopyMachine.ui.buttons[b], story);
+				});
 			};
 		}(key));
 	}
